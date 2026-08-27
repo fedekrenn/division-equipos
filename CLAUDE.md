@@ -23,7 +23,7 @@ Single-page React app that splits 12 players into two balanced 6 vs 6 football t
 - `src/components/GroupPlayers.tsx` — form to tag 2+ players as a "group" (e.g. "Delanteros"); a player can only belong to one group at a time.
 - `src/components/PlayerList.tsx` — lists current players and their group tag, if any.
 - `src/utils/teamBalancer.ts` — `balanceTeams(players, groups)`: the core algorithm. It shuffles each group internally and alternates members across `team1`/`team2` so grouped players are split, then fills remaining ungrouped players until `team1` reaches 6. Pure function, no side effects — this is the natural place to add new balancing strategies.
-- `src/types/index.ts` — `Player` and `PlayerGroup` shapes. A `PlayerGroup` references player IDs, not `Player` objects; `Player.groupId` exists in the type but group membership is actually resolved via `PlayerGroup.players`, not `Player.groupId` (that field is currently unused by the app logic).
+- `src/types/index.ts` — `Player` and `PlayerGroup` shapes. A `PlayerGroup` references player IDs, not `Player` objects; `PlayerGroup.players` is the single source of truth for group membership (a player never stores its own group ID).
 
 State is entirely in-memory (React `useState` in `TeamOrganizer`) — nothing is persisted, so a page refresh clears all players/groups/teams.
 
